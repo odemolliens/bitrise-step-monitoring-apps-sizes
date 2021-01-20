@@ -26,7 +26,10 @@ if [[ ${alert_threshold} == ""  ]]; then
 fi
 
 if [[ ${check_android} == "yes" ]]; then
-    # SIZE CHECK - if the size of the new apk bigger than the size set into config file or on bitrise
+    # SIZE CHECK - if the size of the new APk bigger than the size set into config file or on bitrise
+    ANDROID_NEW_APP_SIZE=$(wc -c "android.apk" | awk '{print $1}')
+    ANDROID_NEW_APP_SIZE_MB=$(echo "$ANDROID_NEW_APP_SIZE / 1024^2" | bc)
+
     APK_SIZE_WITH_ALERT_THRESHOLD=$(($android_apk_size + $alert_threshold))
     if [ $ANDROID_NEW_APP_SIZE_MB -gt $APK_SIZE_WITH_ALERT_THRESHOLD ]; then
         NEW_APK_SIZE=$ANDROID_NEW_APP_SIZE_MB
@@ -35,7 +38,10 @@ if [[ ${check_android} == "yes" ]]; then
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
-    # SIZE CHECK - if the size of the new ipa bigger than the size set into config file or on bitrise
+    # SIZE CHECK - if the size of the new IPA bigger than the size set into config file or on bitrise
+    IOS_NEW_APP_SIZE=$(wc -c "ios.ipa" | awk '{print $1}')
+    IOS_NEW_APP_SIZE_MB=$(echo "$IOS_NEW_APP_SIZE / 1024^2" | bc)
+
     IPA_SIZE_WITH_ALERT_THRESHOLD=$(($ios_ipa_size + $alert_threshold))
     if [ $IOS_NEW_APP_SIZE_MB -gt $IPA_SIZE_WITH_ALERT_THRESHOLD ]; then
         NEW_IPA_SIZE=$IOS_NEW_APP_SIZE_MB
