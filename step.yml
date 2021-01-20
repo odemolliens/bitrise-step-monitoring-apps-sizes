@@ -1,0 +1,119 @@
+#
+# A couple of useful guides & docs:
+#
+# - Main Bitrise CLI docs: https://github.com/bitrise-io/bitrise/tree/master/_docs
+# - Step Development Guideline: https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+# - Bitrise.yml format spec: https://github.com/bitrise-io/bitrise/blob/master/_docs/bitrise-yml-format-spec.md
+# - Bitrise docs: http://devcenter.bitrise.io/
+# - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
+
+title: |-
+  Mobile apps sizes monitoring
+summary: |
+  Check and monitor mobile applications sizes
+description: |
+  Check mobile applications sizes and compare with configured values to be warned when apps sizes increased
+
+  ### Usage
+
+
+  To give to our step the informations about the expected values, you have:
+  - create a config file (which should be added to your project repository) and set `config_file_path`  to find them. You can find a config example file [here](#config-file-example)
+  - **OR** set these keys with expected values directly on Bitrise side
+    - android_apk_size
+    - ios_ipa_size
+    - alert_threshold
+
+  ### Troubleshooting
+
+  - Be aware, you have to launch this step after [apps-decompiler](https://github.com/imranMnts/bitrise-step-apps-decompiler) step
+
+website: https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes
+source_code_url: https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes
+support_url: https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes/issues
+host_os_tags:
+  - osx-10.10
+  - ubuntu-16.04
+project_type_tags:
+  - ios
+  - android
+  - react-native
+  - flutter
+type_tags:
+  - utility
+is_requires_admin_user: false
+is_always_run: true
+is_skippable: false
+toolkit:
+  bash:
+    entry_file: step.sh
+inputs:
+  - check_android: "yes"
+    opts:
+      title: "Check Android"
+      summary: "Do you want check android size?"
+      description: "To check or not android size"
+      is_expand: true
+      is_required: true
+      value_options:
+        - "yes"
+        - "no"
+  - check_ios: "yes"
+    opts:
+      title: "Check iOS"
+      summary: "Do you want check iOS size?"
+      description: "To check or not iOS size"
+      is_expand: true
+      is_required: true
+      value_options:
+        - "yes"
+        - "no"
+  - config_file_path:
+    opts:
+      title: "Config file path"
+      summary: "Path of the config file"
+      description: |
+        The config file where we have some informations like the current android app size eg. to compare with next builds and alert if needed.
+        If you want use Environment Variables instead of the config file, do not set this key and add variables. (See [README](https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes/blob/master/README.md) to see all needed variables)
+      is_expand: false
+      is_required: false
+  - android_apk_size:
+    opts:
+      title: "Android APK size"
+      summary: "Android APK size (MB)"
+      description: |
+        Set this key if you want to follow up on your project's android APK size
+        You can add a config file where you can add all application information and set `config_file_path` to find it.
+
+        Tip: You can set it to 0 and launch one time this step to check report file to know the current value.
+      is_expand: false
+      is_required: false
+  - ios_ipa_size:
+    opts:
+      title: "iOS IPA size"
+      summary: "iOS IPA size (MB)"
+      description: |
+        Set this key if you want follow up your project's ios IPA size
+        You can add a config file where you can add all application information and set `config_file_path` to find it.
+
+        Tip: You can set it to 0 and launch one time this step to check report file to know the current value.
+      is_expand: false
+      is_required: false
+  - alert_threshold: "5"
+    opts:
+      title: "Alert threshold"
+      summary: "Threshold to alert when app size increase (MB)"
+      is_expand: true
+      is_required: true
+      value_options:
+        - "3"
+        - "5"
+        - "10"
+        - "20"
+outputs:
+  - NEW_IPA_SIZE:
+    opts:
+      title: Current build's ios IPA size (MB)
+  - NEW_APK_SIZE:
+    opts:
+      title: Current build's android APK size (MB)
