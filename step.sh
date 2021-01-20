@@ -72,6 +72,8 @@ if [[ ${check_android} == "yes" ]]; then
         printf "!!! New Android apk is bigger !!!\n" >> quality_report.txt
         printf "It weighed: $android_apk_size MB \n" >> quality_report.txt
         printf "And now: $NEW_APK_SIZE MB \n" >> quality_report.txt
+    else
+        printf "0 alert \n" >> quality_report.txt
     fi
     printf "\n" >> quality_report.txt
 fi
@@ -82,6 +84,8 @@ if [[ ${check_ios} == "yes" ]]; then
         printf "!!! New iOS ipa is bigger !!!\n" >> quality_report.txt
         printf "It weighed: $ios_ipa_size MB \n" >> quality_report.txt
         printf "And now: $NEW_IPA_SIZE MB \n\n" >> quality_report.txt
+    else
+        printf "0 alert \n" >> quality_report.txt
     fi
     printf "\n" >> quality_report.txt
 fi
