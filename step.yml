@@ -28,9 +28,9 @@ description: |
 
   - Be aware, you have to launch this step after [apps-decompiler](https://github.com/imranMnts/bitrise-step-apps-decompiler) step
 
-website: https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes
-source_code_url: https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes
-support_url: https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes/issues
+website: https://github.com/odemolliens/bitrise-step-monitoring-apps-sizes
+source_code_url: https://github.com/odemolliens/bitrise-step-monitoring-apps-sizes
+support_url: https://github.com/odemolliens/bitrise-step-monitoring-apps-sizes/issues
 host_os_tags:
   - osx-10.10
   - ubuntu-16.04
