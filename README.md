@@ -25,6 +25,8 @@ To give to our step the informations about the expected values, you have:
 
 <br/>
 
+At the end, it will generate a report file `quality_report.txt`. Just have to launch `deploy-to-bitrise-io` after this step to publish it to your artifacts
+
 ## Inputs
 
 The asterisks (*) mean mandatory keys
