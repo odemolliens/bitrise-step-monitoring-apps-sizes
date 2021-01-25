@@ -90,7 +90,7 @@ if [[ ${check_ios} == "yes" ]]; then
     printf "\n" >> quality_report.txt
 fi
 
-cp quality_report.txt /Users/vagrant/deploy/quality_report.txt || true
+cp quality_report.txt $BITRISE_DEPLOY_DIR/quality_report.txt || true
 
 if [[ ${NEW_APK_SIZE} != "" || ${NEW_IPA_SIZE} != ""  ]]; then
     echo "Generate an error due to app size alert"
