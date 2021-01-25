@@ -17,7 +17,7 @@ description: |
   ### Usage
 
 
-  To give to our step the informations about the expected values, you have:
+  To give to our step the information about the expected values, you have:
   - create a config file (which should be added to your project repository) and set `config_file_path`  to find them. You can find a config example file [here](#config-file-example)
   - **OR** set these keys with expected values directly on Bitrise side
     - android_apk_size
@@ -42,7 +42,7 @@ project_type_tags:
 type_tags:
   - utility
 is_requires_admin_user: false
-is_always_run: true
+is_always_run: false
 is_skippable: false
 toolkit:
   bash:
@@ -51,8 +51,8 @@ inputs:
   - check_android: "yes"
     opts:
       title: "Check Android"
-      summary: "Do you want check android size?"
-      description: "To check or not android size"
+      summary: "Do you want check Android size?"
+      description: "To check or not Android size"
       is_expand: true
       is_required: true
       value_options:
@@ -73,7 +73,7 @@ inputs:
       title: "Config file path"
       summary: "Path of the config file"
       description: |
-        The config file where we have some informations like the current android app size eg. to compare with next builds and alert if needed.
+        The config file where we have some information like the current Android app size eg. to compare with next builds and alert if needed.
         If you want use Environment Variables instead of the config file, do not set this key and add variables. (See [README](https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes/blob/master/README.md) to see all needed variables)
       is_expand: false
       is_required: false
@@ -82,7 +82,7 @@ inputs:
       title: "Android APK size"
       summary: "Android APK size (MB)"
       description: |
-        Set this key if you want to follow up on your project's android APK size
+        Set this key if you want to follow up on your project's Android APK size
         You can add a config file where you can add all application information and set `config_file_path` to find it.
 
         Tip: You can set it to 0 and launch one time this step to check report file to know the current value.
@@ -116,4 +116,4 @@ outputs:
       title: Current build's ios IPA size (MB)
   - NEW_APK_SIZE:
     opts:
-      title: Current build's android APK size (MB)
+      title: Current build's Android APK size (MB)
