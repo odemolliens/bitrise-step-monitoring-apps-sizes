@@ -26,6 +26,10 @@ if [[ ${alert_threshold} == ""  ]]; then
 fi
 
 if [[ ${check_android} == "yes" ]]; then
+    if [ ! -f "android.apk" ]; then
+        echo "Error: Cannot find the APK"
+        exit 1
+    fi
     # SIZE CHECK - if the size of the new APk bigger than the size set into config file or on bitrise
     ANDROID_NEW_APP_SIZE=$(wc -c "android.apk" | awk '{print $1}')
     ANDROID_NEW_APP_SIZE_MB=$(echo "$ANDROID_NEW_APP_SIZE / 1024^2" | bc)
@@ -38,6 +42,11 @@ if [[ ${check_android} == "yes" ]]; then
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
+    if [ ! -f "ios.ipa" ]; then
+        echo "Error: Cannot find the IPA"
+        echo "Error: Please check if launched apps-decompiler step before this one and if succeeded "
+        exit 1
+    fi
     # SIZE CHECK - if the size of the new IPA bigger than the size set into config file or on bitrise
     IOS_NEW_APP_SIZE=$(wc -c "ios.ipa" | awk '{print $1}')
     IOS_NEW_APP_SIZE_MB=$(echo "$IOS_NEW_APP_SIZE / 1024^2" | bc)
