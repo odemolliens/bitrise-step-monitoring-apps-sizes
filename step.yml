@@ -18,7 +18,7 @@ description: |
 
 
   To give to our step the information about the expected values, you have:
-  - create a config file (which should be added to your project repository) and set `config_file_path`  to find them. You can find a config example file [here](#config-file-example)
+  - create a config file (which should be added to your project repository) and set `config_file_path`  to find them. You can find a config example file [here](https://github.com/odemolliens/bitrise-step-monitoring-apps-sizes#config-file-example)
   - **OR** set these keys with expected values directly on Bitrise side
     - android_apk_size
     - ios_ipa_size
