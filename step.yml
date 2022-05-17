@@ -75,7 +75,7 @@ inputs:
       description: |
         The config file where we have some information like the current Android app size eg. to compare with next builds and alert if needed.
         If you want use Environment Variables instead of the config file, do not set this key and add variables. (See [README](https://github.com/imranMnts/bitrise-step-monitoring-apps-sizes/blob/master/README.md) to see all needed variables)
-      is_expand: false
+      is_expand: true
       is_required: false
   - android_apk_size:
     opts:
