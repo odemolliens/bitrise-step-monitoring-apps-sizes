@@ -61,45 +61,29 @@ fi
 echo "---- REPORT ----"
 
 
-if [ ! -f "quality_report.txt" ]; then
-    printf "QUALITY REPORT\n\n\n" > quality_report.txt
+
+
+if [ ! -f "quality_report.json" ]; then
+  touch "quality_report.json"
+  echo "{}" > "quality_report.json"
 fi
 
-printf ">>>>>>>>>>  CURRENT APP SIZES  <<<<<<<<<<\n" >> quality_report.txt
-if [[ ${check_android} == "yes" ]]; then
-    printf "Android APK: $android_apk_size MB \n" >> quality_report.txt
-fi
-if [[ ${check_ios} == "yes" ]]; then
-    printf "iOS IPA: $ios_ipa_size MB \n" >> quality_report.txt
-fi
+STEP_KEY="Sizes"
+JSON_OBJECT='{ }'
+JSON_OBJECT=$(echo "$(jq ". + { "\"$STEP_KEY\"": {} }" <<<"$JSON_OBJECT")")
 
 printf "\n\n" >> quality_report.txt
 
 if [[ ${check_android} == "yes" ]]; then
-    printf "   >>>>>>>  ANDROID  <<<<<<< \n" >> quality_report.txt
-    if [[ ${NEW_APK_SIZE} != "" ]]; then
-        printf "!!! New Android apk is bigger !!!\n" >> quality_report.txt
-        printf "It weighed: $android_apk_size MB \n" >> quality_report.txt
-        printf "And now: $NEW_APK_SIZE MB \n" >> quality_report.txt
-    else
-        printf "0 alert \n" >> quality_report.txt
-    fi
-    printf "\n" >> quality_report.txt
+    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "androidApp": { "oldValue": "$android_apk_size", "value": "$NEW_APK_SIZE", "displayAlert": true } }" <<<"$JSON_OBJECT")")
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
-    printf "   >>>>>>>  IOS  <<<<<<< \n" >> quality_report.txt
-    if [[ ${NEW_IPA_SIZE} != "" ]]; then
-        printf "!!! New iOS ipa is bigger !!!\n" >> quality_report.txt
-        printf "It weighed: $ios_ipa_size MB \n" >> quality_report.txt
-        printf "And now: $NEW_IPA_SIZE MB \n\n" >> quality_report.txt
-    else
-        printf "0 alert \n" >> quality_report.txt
-    fi
-    printf "\n" >> quality_report.txt
+    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "iosApp": { "oldValue": "$ios_ipa_size", "value": "$NEW_IPA_SIZE", "displayAlert": true } }" <<<"$JSON_OBJECT")")
 fi
 
-cp quality_report.txt $BITRISE_DEPLOY_DIR/quality_report.txt || true
+echo "$(jq ". + $JSON_OBJECT" <<< cat quality_report.json)" > quality_report.json
+cp quality_report.json $BITRISE_DEPLOY_DIR/quality_report.json || true
 
 if [[ ${NEW_APK_SIZE} != "" || ${NEW_IPA_SIZE} != ""  ]]; then
     echo "Generate an error due to app size alert"
