@@ -75,11 +75,11 @@ JSON_OBJECT=$(echo "$(jq ". + { "\"$STEP_KEY\"": {} }" <<<"$JSON_OBJECT")")
 printf "\n\n" >> quality_report.txt
 
 if [[ ${check_android} == "yes" ]]; then
-    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "androidApp": { "oldValue": "$android_apk_size", "value": "$NEW_APK_SIZE", "displayAlert": true } }" <<<"$JSON_OBJECT")")
+    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "androidApp": { "oldValue": "$android_apk_size", "value": "$ANDROID_NEW_APP_SIZE_MB", "displayAlert": true } }" <<<"$JSON_OBJECT")")
 fi
 
 if [[ ${check_ios} == "yes" ]]; then
-    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "iosApp": { "oldValue": "$ios_ipa_size", "value": "$NEW_IPA_SIZE", "displayAlert": true } }" <<<"$JSON_OBJECT")")
+    JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "iosApp": { "oldValue": "$ios_ipa_size", "value": "$IOS_NEW_APP_SIZE_MB", "displayAlert": true } }" <<<"$JSON_OBJECT")")
 fi
 
 echo "$(jq ". + $JSON_OBJECT" <<< cat quality_report.json)" > quality_report.json
