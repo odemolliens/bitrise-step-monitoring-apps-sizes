@@ -72,8 +72,6 @@ STEP_KEY="Sizes"
 JSON_OBJECT='{ }'
 JSON_OBJECT=$(echo "$(jq ". + { "\"$STEP_KEY\"": {} }" <<<"$JSON_OBJECT")")
 
-printf "\n\n" >> quality_report.txt
-
 if [[ ${check_android} == "yes" ]]; then
     JSON_OBJECT=$(echo "$(jq ".$STEP_KEY += { "androidApp": { "oldValue": "$android_apk_size", "value": "$ANDROID_NEW_APP_SIZE_MB", "displayAlert": true } }" <<<"$JSON_OBJECT")")
 fi
